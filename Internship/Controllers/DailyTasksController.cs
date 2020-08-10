@@ -96,28 +96,18 @@ namespace Internship.Controllers
             if (dailyTask != null)
             {
                 using (DailyTaskDBContext db = new DailyTaskDBContext())
-                {/*
+                {
                     DailyTaskRepresentation dailyTaskRepresentation = new DailyTaskRepresentation();
                     dailyTaskRepresentation.IsCompleted = dailyTask.IsCompleted;
                     dailyTaskRepresentation.TaskDescription = dailyTask.TaskDescription;
                     dailyTaskRepresentation.TaskDueDate = dailyTask.TaskDueDate;
                     dailyTaskRepresentation.TaskName = dailyTask.TaskName;
-                    */
 
-                    var result = db.DailyTaskTable.FirstOrDefault(p => p.DailyTaskID == id);
-                    if (result != null)
-                    {
-                        db.DailyTaskTable.Remove(result);
-                        db.SaveChanges();
-                    }
-                    /*
                     db.DailyTaskTable.Update(dailyTaskRepresentation);
                     db.SaveChanges();
-                    */
 
                 }
             }
-            
         }
 
         // DELETE api/DailyTasks/5
