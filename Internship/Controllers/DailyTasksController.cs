@@ -93,19 +93,18 @@ namespace Internship.Controllers
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] DailyTaskView dailyTask)
         {
-            if (dailyTask != null)
+            using (DailyTaskDBContext db = new DailyTaskDBContext())
             {
-                using (DailyTaskDBContext db = new DailyTaskDBContext())
+                var result = db.DailyTaskTable.FirstOrDefault(p => p.DailyTaskID == id);
+                if (result != null)
                 {
-                    DailyTaskRepresentation dailyTaskRepresentation = new DailyTaskRepresentation();
-                    dailyTaskRepresentation.IsCompleted = dailyTask.IsCompleted;
-                    dailyTaskRepresentation.TaskDescription = dailyTask.TaskDescription;
-                    dailyTaskRepresentation.TaskDueDate = dailyTask.TaskDueDate;
-                    dailyTaskRepresentation.TaskName = dailyTask.TaskName;
-
-                    db.DailyTaskTable.Update(dailyTaskRepresentation);
+                    result.DailyTaskID = dailyTask.DailyTaskID;
+                    result.TaskName = dailyTask.TaskName;
+                    result.IsCompleted = dailyTask.IsCompleted;
+                    result.TaskDescription = dailyTask.TaskDescription;
+                    result.TaskDueDate = dailyTask.TaskDueDate;
+                    
                     db.SaveChanges();
-
                 }
             }
         }
